@@ -1,0 +1,1 @@
+console.log("Benvingut a la pàgina en blanc!");

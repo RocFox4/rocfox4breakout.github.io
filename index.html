@@ -1,9 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        }
+        #menu {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 2em;
+            background: -webkit-linear-gradient(#ff6f61, #de6262);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        button {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        #startButton {
+            background-color: #34ace0;
+            color: white;
+        }
+        #startButton:hover {
+            background-color: #227093;
+            transform: scale(1.1);
+        }
+        #exitButton {
+            background-color: #ff4757;
+            color: white;
+        }
+        #exitButton:hover {
+            background-color: #ff6b81;
+            transform: scale(1.1);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
 <body>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+    <!-- Menú inicial amb dues opcions: Inici i Sortir -->
+    <div id="menu">
+        <h1>Benvingut!</h1>
+        <button id="startButton">Inici</button>
+        <button id="exitButton">Sortir</button>
+    </div>
+
+    <!-- Incloem el fitxer JavaScript extern -->
+    <script src="menu.js"></script>
 
 </body>
 </html>
