@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joc de Breakout</title>
+    <title>Joc de Pilota</title>
     <style>
         canvas {
             border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-            background: #ffffff;
+        }
+        #pauseMenu {
+            display: none; /* Amagar per defecte */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* Assegura que el menú es visible */
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div>
+        <h1 id="score">Puntuació: 0</h1>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+    <div id="pauseMenu">
+        <h2>Menú de Pausa</h2>
+        <button id="continueButton">Continuar</button>
+        <button id="restartButton">Reiniciar</button>
+        <label for="paddleColor">Color de la Pala:</label>
+        <input type="color" id="paddleColor" value="#00c0ff">
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
