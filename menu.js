@@ -21,7 +21,8 @@ document.body.appendChild(menu);
 
 // Quan es faci clic al botó "Inici", redirigim a la pàgina main.html
 startButton.addEventListener('click', () => {
-    window.location.href = 'main.html'; // Redirigeix a la pàgina principal
+    window.close();
+    window.open('main.html')
 });
 
 // Quan es faci clic al botó "Sortir", intentem tancar la pestanya

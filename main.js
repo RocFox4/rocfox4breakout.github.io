@@ -290,6 +290,11 @@ document.getElementById('restartButton').addEventListener('click', function() {
     resetGame(); // Reiniciar el joc
     togglePause(); // Tornar a continuar el joc
 });
+// Funció per sortir al menú
+document.getElementById('exitButton').addEventListener('click', function() {
+    window.close()
+    window.open('index.html'); // Redirigir a index.html
+});
 
 // Funció per canviar el color de la pala
 document.getElementById('paddleColor').addEventListener('input', function() {
