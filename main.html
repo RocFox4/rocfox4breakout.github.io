@@ -5,20 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joc de Pilota</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
         canvas {
-            border: 1px solid black;
+            border: 2px solid #333;
+            background-color: #fff;
+        }
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color:  #fff;
+            font-weight: bold;
         }
         #pauseMenu {
-            display: none; /* Amagar per defecte */
+            display: none;
             position: absolute;
-            top: 50%;
+            top: 20%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000; /* Assegura que el menú es visible */
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        #pauseMenu h1 {
+            margin-bottom: 20px;
+        }
+        #pauseMenu button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            background-color: #34ace0;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        #pauseMenu button:hover {
+            background-color: #227093;
         }
     </style>
 </head>
