@@ -1,13 +1,12 @@
-// Inicialització del canvas i el context WebGL
 const canvas = document.getElementById('gameCanvas');
 const gl = canvas.getContext('webgl');
 
-// Verificar que WebGL estigui disponible
+// Verifiquem que WebGL estigui disponible
 if (!gl) {
     console.error("No s'ha pogut inicialitzar WebGL.");
 }
 
-// Variables globals per a la bola i el paddle
+// Variables globals per a la bola i la pala
 let ballRadius = 10;
 let x = canvas.width / 2; // Posició inicial de la pilota al centre
 let y = canvas.height - 30; // Posició inicial de la pilota
@@ -20,8 +19,7 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 
 let rightPressed = false;
 let leftPressed = false;
-
-let isPaused = false; // Estat del joc
+let isPaused = false; 
 
 // Gestió de les tecles
 document.addEventListener('keydown', keyDownHandler);
@@ -66,7 +64,7 @@ const fragmentShaderSource = `
     }
 `;
 
-// Compile shader
+
 function compileShader(source, type) {
     const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
@@ -78,18 +76,18 @@ function compileShader(source, type) {
     gl.deleteShader(shader);
 }
 
-// Initialize shaders
+
 const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
 const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
 
-// Create program
+// Creem programa
 const program = gl.createProgram();
 gl.attachShader(program, vertexShader);
 gl.attachShader(program, fragmentShader);
 gl.linkProgram(program);
 gl.useProgram(program);
 
-// Set up position attribute
+
 const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
 const resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
 const colorUniformLocation = gl.getUniformLocation(program, "u_color");
@@ -148,20 +146,49 @@ function drawBall() {
 function drawPaddle() {
     // Utilitzar TRIANGLES per al paddle
     const paddlePositions = new Float32Array([
-        paddleX, canvas.height - paddleHeight,           // Bottom left
-        paddleX + paddleWidth, canvas.height - paddleHeight, // Bottom right
-        paddleX, canvas.height,                            // Top left
-        paddleX + paddleWidth, canvas.height,             // Top right
+        paddleX, canvas.height - paddleHeight,           // Baix esquerra
+        paddleX + paddleWidth, canvas.height - paddleHeight, // Baix dreta
+        paddleX, canvas.height,                            // Dalt esquerra
+        paddleX + paddleWidth, canvas.height,             // Dalt dreta
     ]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, paddlePositions, gl.STATIC_DRAW);
     
-    // Dibuixar el paddle com a TRIANGLE_STRIP
+    //Dibuixem la pala
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-    gl.uniform4f(colorUniformLocation, ...hexToRgb(document.getElementById('paddleColor').value), 1.0); // Color de la pala
+    gl.uniform4f(colorUniformLocation, ...hexToRgb(document.getElementById('paddleColor').value), 1.0); 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); // Dibuixar el paddle
+
+      //Linea negra al voltant de la pala
+
+      const paddleLinePositions = new Float32Array([
+        paddleX, canvas.height - paddleHeight,           // Baix esquerra
+        paddleX + paddleWidth, canvas.height - paddleHeight, // Baix dreta
+
+        paddleX + paddleWidth, canvas.height - paddleHeight, // Baix dreta
+        paddleX + paddleWidth, canvas.height,             // Dalt dreta
+
+        paddleX + paddleWidth, canvas.height,             // Dalt dreta
+        paddleX, canvas.height,                            // Dalt esquerra
+
+        paddleX, canvas.height,                            // Dalt esquerra
+        paddleX, canvas.height - paddleHeight              // Baix esquerra
+    ]);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, paddleLinePositions, gl.STATIC_DRAW);
+    
+    // Configurar el punter de vèrtex per a les línies
+    gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+    
+    // Color negre per a la línia de contorn
+    gl.uniform4f(colorUniformLocation, 0.0, 0.0, 0.0, 1.0); 
+
+    // Dibuixar el contorn amb LINES
+    gl.drawArrays(gl.LINES, 0, 8); // 8 punts, 4 línies
 }
+
 
 // Funció per dibuixar punts aleatoris
 function drawRandomPoints() {
@@ -187,23 +214,23 @@ function checkBallCollisionWithPoints() {
         const { x: pointX, y: pointY } = randomPoints[i];
         const size = randomSizes[i];
 
-        // Comprovar col·lisió
+        // Comprovem col·lisió
         if (
             x + ballRadius >= pointX - size / 2 &&
             x - ballRadius <= pointX + size / 2 &&
             y + ballRadius >= pointY - size / 2 &&
             y - ballRadius <= pointY + size / 2
         ) {
-            // Incrementar la puntuació i eliminar el punt
+            // Si colisiona : Incrementem la puntuació i eliminar el punt
             score++;
 
-            // Comprovar si la puntuació és múltiple de 5
+            // Comprovem si la puntuació és múltiple de 5
             if (score % 5 === 0) {
-                dx *= 1.1; // Augmentar la velocitat de la pilota en un 10%
+                dx *= 1.1; // Augmentem la velocitat de la pilota en un 10%
                 dy *= 1.1;
             }
 
-            // Reiniciar el punt
+            // Reiniciem el punt
             randomPoints[i] = {
                 x: Math.random() * canvas.width,
                 y: Math.random() * (canvas.height / 2),
@@ -236,15 +263,15 @@ function draw() {
         x += dx;
         y += dy;
 
-        // Comprovar col·lisió amb les parets
+        // Comprovar la col·lisió de la pilota amb les parets
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-            dx = -dx; // Invertir direcció en cas de col·lisió
+            dx = -dx; // Invertir direcció
         }
         if (y + dy < ballRadius) {
-            dy = -dy; // Invertir direcció si toca la part superior
-        } else if (y + dy > canvas.height - ballRadius) {
+            dy = -dy; // Invertir direcció
+        } else if (y + dy > canvas.height - ballRadius) { // Comprovem col·lisió amb la pala
             if (x > paddleX && x < paddleX + paddleWidth) {
-                dy = -dy; // Col·lisió amb el paddle
+                dy = -dy; // Invertir direcció
             } else {
                 // Joc acabat, reiniciar
                 alert("Has perdut! Reinicia el joc.");
@@ -252,11 +279,11 @@ function draw() {
             }
         }
 
-        // Controlar el paddle
+        // Controlar la pala
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
-            paddleX += 7; // Mou el paddle a la dreta
+            paddleX += 7; // Movem la pala a la dreta
         } else if (leftPressed && paddleX > 0) {
-            paddleX -= 7; // Mou el paddle a l'esquerra
+            paddleX -= 7; // Movem la pala a l'esquerra
         }
     }
 
@@ -265,17 +292,20 @@ function draw() {
 
 // Funció per reiniciar el joc
 function resetGame() {
-    // Reiniciar la posició de la pilota al centre
+    rightPressed = false; //Per evitar bug
+    leftPressed = false;
+    // Reiniciem la posició de la pilota al centre
     x = canvas.width / 2;
     y = canvas.height - 30;
-    dx = 2; // Restablir velocitat
+    dx = 2; // Restablim velocitat
     dy = -2;
-    paddleX = (canvas.width - paddleWidth) / 2; // Restablir la posició del paddle
-    score = 0; // Reiniciar la puntuació
+    paddleX = (canvas.width - paddleWidth) / 2; // Restablim la posició de la pala
+    score = 0; // Reiniciem la puntuació
 }
 
 // Funció per alternar entre pausa i continuació
 function togglePause() {
+    
     isPaused = !isPaused;
     document.getElementById('pauseMenu').style.display = isPaused ? 'block' : 'none'; // Mostrar o amagar el menú de pausa
 }

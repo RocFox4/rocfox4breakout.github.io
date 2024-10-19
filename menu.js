@@ -19,13 +19,13 @@ menu.appendChild(exitButton);
 // Afegir el menú al document
 document.body.appendChild(menu);
 
-// Quan es faci clic al botó "Inici", redirigim a la pàgina main.html
+// Quan es faci clic al botó "Inici", tanquem finestra i obrim una de nova amb el joc (per evitar que després no es pugui tancar)
 startButton.addEventListener('click', () => {
     window.close();
     window.open('main.html');
 });
 
-// Quan es faci clic al botó "Sortir", intentem tancar la pestanya
+// Quan es faci clic al botó "Sortir", tanquem la finestra
 exitButton.addEventListener('click', () => {
     window.close();
 });
