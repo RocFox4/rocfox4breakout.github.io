@@ -2,7 +2,7 @@ const menu = document.createElement('div');
 menu.id = 'menu';
 
 const title = document.createElement('h1');
-title.textContent = 'Benvingut!';
+title.textContent = 'BREAKOUT by Rocfox4';
 menu.appendChild(title);
 
 const startButton = document.createElement('button');
