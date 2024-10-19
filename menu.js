@@ -1,4 +1,3 @@
-// Crear els elements visuals del menú dinàmicament
 const menu = document.createElement('div');
 menu.id = 'menu';
 
@@ -16,7 +15,6 @@ exitButton.id = 'exitButton';
 exitButton.textContent = 'Sortir';
 menu.appendChild(exitButton);
 
-// Afegir el menú al document
 document.body.appendChild(menu);
 
 // Quan es faci clic al botó "Inici", tanquem finestra i obrim una de nova amb el joc (per evitar que després no es pugui tancar)
