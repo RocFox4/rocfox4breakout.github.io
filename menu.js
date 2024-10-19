@@ -21,10 +21,11 @@ document.body.appendChild(menu);
 
 // Quan es faci clic al botó "Inici", redirigim a la pàgina main.html
 startButton.addEventListener('click', () => {
-    window.open('https://rocfox4.github.io/rocfox4breakout.github.io/main.html', '_self');
+    window.close();
+    window.open('main.html');
 });
 
 // Quan es faci clic al botó "Sortir", intentem tancar la pestanya
 exitButton.addEventListener('click', () => {
-    window.open('https://rocfox4.github.io/rocfox4breakout.github.io/index.html', '_self').close();
+    window.open(window.location.href, '_self').close();
 });

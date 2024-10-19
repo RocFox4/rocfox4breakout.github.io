@@ -292,7 +292,8 @@ document.getElementById('restartButton').addEventListener('click', function() {
 });
 // Funció per sortir al menú
 document.getElementById('exitButton').addEventListener('click', function() {
-    window.open('https://rocfox4.github.io/rocfox4breakout.github.io/index.html', '_self');
+    window.close();
+    window.open('index.html');
 });
 
 // Funció per canviar el color de la pala
