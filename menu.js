@@ -27,5 +27,5 @@ startButton.addEventListener('click', () => {
 
 // Quan es faci clic al botó "Sortir", intentem tancar la pestanya
 exitButton.addEventListener('click', () => {
-    window.open(window.location.href, '_self').close();
+    window.close();
 });
