@@ -26,5 +26,5 @@ startButton.addEventListener('click', () => {
 
 // Quan es faci clic al botó "Sortir", intentem tancar la pestanya
 exitButton.addEventListener('click', () => {
-    window.close(); 
+    window.open('https://rocfox4.github.io/rocfox4breakout.github.io/index.html', '_self').close();
 });
